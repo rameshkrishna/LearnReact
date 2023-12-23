@@ -1,0 +1,27 @@
+# Use a Node.js image as the base
+
+FROM node:latest
+
+# Set the working directory in the container
+
+WORKDIR /app
+
+# Copy package.json and package-lock.json (if available) to the container
+
+COPY package.json ./
+
+# Install dependencies
+
+RUN npm install
+
+# Expose the port the app runs on
+
+EXPOSE 3000
+
+# Mount your source code into the container
+
+VOLUME [ "/app" ]
+
+# Start the application in development mode with hot reloading
+
+CMD ["npm", "run", "dev"]
