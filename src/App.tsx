@@ -8,7 +8,9 @@ import { useState } from "react";
 // import ReportForm from "./components/ReportForm";
 import Nav from "./components/BootStrapComponents/Nav";
 // import CSVReader from "./components/CSVReader";
-import ReactHookExample from "./components/ReactHookExample";
+// import ReactHookExample from "./components/ReactHookExample";
+
+import FormValidationExampleZod from "./components/FormValidationExampleZod";
 
 function App() {
   // const [activeItem, setActiveItem] = useState<string>("");
@@ -48,11 +50,18 @@ function App() {
   //   setSelectedProject(project);
   //   setMarkdownResponse(report);
   // };
-  const handleFormSubmit = (data) => {
+  interface FormData {
+    director: string;
+    project: string;
+    markdownResponse: string;
+  }
+
+  const handleFormSubmit = (data: FormData) => {
     console.log(data.director);
     setSelectedDirector(data.director);
     setSelectedProject(data.project);
     setMarkdownResponse(data.markdownResponse);
+    console.log(data);
   };
   return (
     <div>
@@ -75,7 +84,7 @@ function App() {
 
       {/* <EmailPasswordForm /> */}
       {/* <CSVReader onFormSubmit={handleFormSubmit} /> */}
-      <ReactHookExample onFormSubmit={handleFormSubmit} />
+      <FormValidationExampleZod onFormSubmit={handleFormSubmit} />
     </div>
   );
 }
