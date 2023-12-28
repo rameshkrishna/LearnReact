@@ -38,7 +38,7 @@ const FormValidationExampleZod = ({
   const markdownResponse = watch("markdownResponse");
 
   useEffect(() => {
-    readCSV("src/components/data/projects.csv", (csvData: CsvDataRow[]) => {
+    readCSV("src/assets/projects.csv", (csvData: CsvDataRow[]) => {
       setData(csvData);
       const directors = new Set(csvData.map((row) => row.Director));
       setUniqueDirectors(Array.from(directors));

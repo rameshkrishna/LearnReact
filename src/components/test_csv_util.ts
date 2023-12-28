@@ -1,9 +1,8 @@
 import Papa from 'papaparse';
-
+// import fs from 'fs';
 interface CsvDataRow {
   Director: string;
   Project: string;
-  // Add more fields as per your CSV structure
 }
 
 export const readCSV = (file: string, callback: (data: CsvDataRow[]) => void) => {
@@ -16,3 +15,37 @@ export const readCSV = (file: string, callback: (data: CsvDataRow[]) => void) =>
     }
   });
 };
+
+
+//usage example
+
+// useEffect(() => {
+//   readCSV("src/components/data/projects.csv", (csvData: CsvDataRow[]) => {
+//     setData(csvData);
+//     const directors = new Set(csvData.map((row) => row.Director));
+//     setUniqueDirectors(Array.from(directors));
+//   });
+// }, []);
+
+// Function to read csv which returns a promise so you can do async / await.
+
+// export const readCSV = async (filePath:string) => {
+//   const csvFile = fs.readFileSync(filePath)
+//   const csvData = csvFile.toString()  
+//   return new Promise(resolve => {
+//     Papa.parse(csvData, {
+//       header: true,
+//       complete: results => {
+//         console.log('Complete', results.data.length, 'records.'); 
+//         resolve(results.data);
+//       }
+//     });
+//   });
+// };
+
+// const test = async () => {
+//   let parsedData = await readCSV(csvFilePath); 
+//   console.log(parsedData)
+// }
+
+// test()
