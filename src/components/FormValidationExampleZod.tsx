@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { readCSV } from "./test_csv_util.js";
+import { readCSV } from "./test_csv_util.ts";
 import MDEditor from "@uiw/react-md-editor";
+
+interface CsvDataRow {
+  Director: string;
+  Project: string;
+  // Add
+}
 
 const FormDataSchema = z.object({
   director: z
@@ -22,23 +28,17 @@ interface FormValidationExampleZodProps {
 const FormValidationExampleZod = ({
   onFormSubmit,
 }: FormValidationExampleZodProps) => {
-  const [data, setData] = React.useState([]);
-  const [uniqueDirectors, setUniqueDirectors] = React.useState([]);
+  const [data, setData] = React.useState<CsvDataRow[]>([]);
+  const [uniqueDirectors, setUniqueDirectors] = useState<string[]>([]);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, watch, setValue } = useForm({
     resolver: zodResolver(FormDataSchema),
   });
   const selectedDirector = watch("director");
   const markdownResponse = watch("markdownResponse");
 
   useEffect(() => {
-    readCSV("src/components/data/projects.csv", (csvData) => {
+    readCSV("src/components/data/projects.csv", (csvData: CsvDataRow[]) => {
       setData(csvData);
       const directors = new Set(csvData.map((row) => row.Director));
       setUniqueDirectors(Array.from(directors));
@@ -112,15 +112,15 @@ const FormValidationExampleZod = ({
               Submit
             </button>
           </form>
-          {Object.keys(errors).length > 0 && (
+          {/* {Object.keys(errors).length > 0 && (
             <div className="alert alert-danger mt-3" role="alert">
-              {errors.director && <p>{errors.director.message}</p>}
-              {errors.project && <p>{errors.project.message}</p>}
-              {errors.markdownResponse && (
+              {errors.director?.message && <p>{errors.director.message}</p>}
+              {errors.project?.message && <p>{errors.project.message}</p>}
+              {errors.markdownResponse?.message && (
                 <p>{errors.markdownResponse.message}</p>
               )}
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

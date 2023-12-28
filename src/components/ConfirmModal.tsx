@@ -1,6 +1,6 @@
 import Modal from "../components/BootStrapComponents/Modal";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface ConfirmModalProps {
   ModalText: string[];

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 
 // ... rest of your component code
 
@@ -24,18 +24,19 @@ function ReportForm() {
     return ["All", ...Array.from(directorSet)];
   }, []);
 
-  const handleChange = (index, value) => {
+  const handleChange = (index: number, value: string) => {
     const updatedReports = [...reports];
     updatedReports[index].report = value;
     setReports(updatedReports);
   };
 
-  const handleDirectorChange = (event) => {
+  const handleDirectorChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setSelectedDirector(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     console.log("Reports:", reports);
   };
 

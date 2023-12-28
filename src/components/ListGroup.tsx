@@ -5,7 +5,7 @@ interface ListGroupProps {
   heading: string;
   onSelectItem: (item: string) => void;
 }
-function ListGroup({ items, heading, onSelectItem }: ListGroupProps) {
+function ListGroup({ items, onSelectItem }: ListGroupProps) {
   //   const items = [
   //     "Ramesh",
   //     "Krishna",

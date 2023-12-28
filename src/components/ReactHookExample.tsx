@@ -1,22 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { readCSV } from "./test_csv_util.js";
+import { readCSV } from "./test_csv_util.ts";
 import MDEditor from "@uiw/react-md-editor";
 
 interface ReactHookExampleProps {
   onFormSubmit: (data: any) => void;
 }
-
+interface CsvDataRow {
+  Director: string;
+  Project: string;
+  // Add more fields as per your CSV structure
+}
 const ReactHookExample = ({ onFormSubmit }: ReactHookExampleProps) => {
-  const [data, setData] = React.useState([]);
-  const [uniqueDirectors, setUniqueDirectors] = React.useState([]);
+  const [data, setData] = React.useState<CsvDataRow[]>([]);
+  const [uniqueDirectors, setUniqueDirectors] = useState<string[]>([]);
 
   const { register, handleSubmit, watch, setValue } = useForm();
   const selectedDirector = watch("director");
   const markdownResponse = watch("markdownResponse");
 
   useEffect(() => {
-    readCSV("src/components/data/projects.csv", (csvData) => {
+    readCSV("src/components/data/projects.csv", (csvData: CsvDataRow[]) => {
       setData(csvData);
       const directors = new Set(csvData.map((row) => row.Director));
       setUniqueDirectors(Array.from(directors));

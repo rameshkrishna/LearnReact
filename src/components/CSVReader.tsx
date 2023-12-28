@@ -1,40 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { readCSV } from "./test_csv_util.js";
+import { useState, useEffect } from "react";
+import { readCSV } from "./test_csv_util.ts";
 import MDEditor from "@uiw/react-md-editor";
 
 interface CSVReaderProps {
   onFormSubmit: (director: string, project: string, report: string) => void;
 }
+
+interface CsvDataRow {
+  Director: string;
+  Project: string;
+  // Add more fields as per your CSV structure
+}
 const CSVReader = ({ onFormSubmit }: CSVReaderProps) => {
-  const [data, setData] = useState([]);
-  const [uniqueDirectors, setUniqueDirectors] = useState([]);
+  const [data, setData] = useState<CsvDataRow[]>([]);
+  const [uniqueDirectors, setUniqueDirectors] = useState<string[]>([]);
   const [selectedDirector, setSelectedDirector] = useState("");
   const [selectedProject, setSelectedProject] = useState("");
   const [markdownResponse, setMarkdownResponse] = useState("");
 
   useEffect(() => {
-    readCSV("src/components/data/projects.csv", (csvData) => {
+    readCSV("src/components/data/projects.csv", (csvData: CsvDataRow[]) => {
       setData(csvData);
       const directors = new Set(csvData.map((row) => row.Director));
       setUniqueDirectors(Array.from(directors));
     });
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents the default form submit action
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     // console.log("Selected Director:", selectedDirector);
     // console.log("Selected Project:", selectedProject);
     // console.log("Markdown Response:", markdownResponse);
     onFormSubmit(selectedDirector, selectedProject, markdownResponse);
   };
 
-  const handleDirectorChange = (e) => {
+  const handleDirectorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDirector(e.target.value);
     setSelectedProject("");
   };
 
-  const handleProjectChange = (e) => {
+  const handleProjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedProject(e.target.value);
+  };
+  const handleMarkdownChange = (value?: string) => {
+    setMarkdownResponse(value || "");
   };
 
   const filteredProjects = selectedDirector
@@ -89,7 +98,7 @@ const CSVReader = ({ onFormSubmit }: CSVReaderProps) => {
               <MDEditor
                 id="markdownResponse"
                 value={markdownResponse}
-                onChange={setMarkdownResponse}
+                onChange={handleMarkdownChange}
                 style={{ height: "200px" }} // Adjust height as needed
               />
             </div>
