@@ -61,7 +61,9 @@ const FormValidationExampleZod = ({
     <div className="container mt-4">
       <div className="card">
         <div className="card-body">
-          <h2 className="card-title">CSV Reader</h2>
+          <h2 className="card-title">
+            Form Validdation Example With Zod and React Form
+          </h2>
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <div className="mb-3">
               <label htmlFor="directorSelect" className="form-label">
